@@ -121,11 +121,15 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddMemoryCache();
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    // If you have multiple documents or want a stable path:
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    options.RoutePrefix = "swagger"; // so /swagger works
+});
+
 //app.UseCors("AllowFrontend");
 
 // Configure the HTTP request pipeline.
